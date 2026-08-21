@@ -5,9 +5,10 @@ import google.generativeai as genai
 
 app = Flask(__name__)
 
-PAGE_ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")
-VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "my_vibe_secret_123")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+# আপনার টোকেন এবং এপিআই কি এখানে বসানো আছে
+PAGE_ACCESS_TOKEN = "EAAO4ULMTvCoBSUIpqA9RxMVjaER3qeE0TOgzN9soPTcGMbLZAfy4F4aNRhxDcBwbhi66ZB0fVyHVpXHa8aMZCQ3YbKsygVPgpbZBGqUqOO0P0OghE1ZCZBbct2syqasZCwX0YvAHFS0263e2jMQbu6a6T983MZAnZBOqgcfAuhVUZBDMrzNoE8xaIWtQmsZA59ZBBLzHqZCfpjwZAD1gZDZD"
+VERIFY_TOKEN = "my_vibe_secret_123"
+GEMINI_API_KEY = "AQ.Ab8RN6IqS9IxSU5iUgv31xuIxk5WH4H_hmoIbkpgJvpv6NULJA"
 
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
