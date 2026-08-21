@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request
 import requests
-import google.generativeai as genai
+from google import genai
 
 app = Flask(__name__)
 
@@ -9,7 +9,8 @@ PAGE_ACCESS_TOKEN = "EAAO4ULMTvCoBSUIpqA9RxMVjaER3qeE0TOgzN9soPTcGMbLZAfy4F4aNRh
 VERIFY_TOKEN = "my_vibe_secret_123"
 GEMINI_API_KEY = "AQ.Ab8RN6IqS9IxSU5iUgv31xuIxk5WH4H_hmoIbkpgJvpv6NULJA"
 
-genai.configure(api_key=GEMINI_API_KEY)
+# নতুন লেটেস্ট ক্লায়েন্ট ইনিশিয়ালাইজেশন
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 @app.route("/", methods=["GET"])
 def home():
@@ -34,12 +35,14 @@ def webhook():
                     
                     if message_text:
                         try:
-                            # জেমিনির লেটেস্ট স্ট্যাবল মডেল ব্যবহার করা হলো
-                            model = genai.GenerativeModel('gemini-1.5-flash')
-                            response = model.generate_content(message_text)
+                            # লেটেস্ট জেমিনি ১.৫ ফ্ল্যাশ মডেল ব্যবহার করা
+                            response = client.models.generate_content(
+                                model='gemini-1.5-flash',
+                                contents=message_text,
+                            )
                             bot_reply = response.text
                         except Exception as e:
-                            bot_reply = f"Error: {str(e)}" # কি সমস্যা হচ্ছে তা দেখার জন্য
+                            bot_reply = f"Error: {str(e)}"
                         
                         send_message(recipient_id, bot_reply)
                         
