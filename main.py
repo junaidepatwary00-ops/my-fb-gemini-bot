@@ -5,13 +5,11 @@ import google.generativeai as genai
 
 app = Flask(__name__)
 
-# আপনার টোকেন এবং এপিআই কি এখানে বসানো আছে
 PAGE_ACCESS_TOKEN = "EAAO4ULMTvCoBSUIpqA9RxMVjaER3qeE0TOgzN9soPTcGMbLZAfy4F4aNRhxDcBwbhi66ZB0fVyHVpXHa8aMZCQ3YbKsygVPgpbZBGqUqOO0P0OghE1ZCZBbct2syqasZCwX0YvAHFS0263e2jMQbu6a6T983MZAnZBOqgcfAuhVUZBDMrzNoE8xaIWtQmsZA59ZBBLzHqZCfpjwZAD1gZDZD"
 VERIFY_TOKEN = "my_vibe_secret_123"
 GEMINI_API_KEY = "AQ.Ab8RN6IqS9IxSU5iUgv31xuIxk5WH4H_hmoIbkpgJvpv6NULJA"
 
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
 
 @app.route("/", methods=["GET"])
 def home():
@@ -36,10 +34,12 @@ def webhook():
                     
                     if message_text:
                         try:
+                            # জেমিনির লেটেস্ট স্ট্যাবল মডেল ব্যবহার করা হলো
+                            model = genai.GenerativeModel('gemini-1.5-flash')
                             response = model.generate_content(message_text)
                             bot_reply = response.text
                         except Exception as e:
-                            bot_reply = "দুঃখিত, এই মুহূর্তে উত্তর দিতে সমস্যা হচ্ছে।"
+                            bot_reply = f"Error: {str(e)}" # কি সমস্যা হচ্ছে তা দেখার জন্য
                         
                         send_message(recipient_id, bot_reply)
                         
